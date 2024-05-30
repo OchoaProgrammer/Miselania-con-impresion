@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('ventas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cliente_id')->constrained()->onDelete('cascade');
-            $table->foreignId('producto_id')->constrained();
+            $table->foreignId('cantidad_id')->references('id')->on('productos')->onDelete('cascade');
             $table->integer('cantidad');
-            $table->decimal('precio');
+            $table->decimal('precio', 8, 2); // Specifying precision and scale
             $table->timestamps();
         });
     }
