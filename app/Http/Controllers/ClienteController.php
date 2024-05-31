@@ -22,15 +22,19 @@ class ClienteController extends Controller
      */
     public function create()
     {
+        $cliente = new Cliente(); // Crear una instancia vacía del modelo Cliente
         return view('clientes.create', compact('cliente'));
-    }
+
+}
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $cliente = Cliente::create($request->all());
+        $cliente=new Cliente(); // Crear un
+        $cliente->nombre = $request->nombre;
+        $cliente->save();
         return redirect()->route('clientes.index');
     }
 
@@ -41,7 +45,7 @@ class ClienteController extends Controller
     {
         $cliente = Cliente::findOrFail($id);
         $ventas = $cliente->ventas()->get();
-        return view('clientes.show', compact('ventas'));
+        return view('cliente.show', compact('ventas'));
     }
 
     /**
@@ -50,7 +54,7 @@ class ClienteController extends Controller
     public function edit($id)
     {
         $cliente = Cliente::findOrFail($id);
-        return view('clientes.edit', compact('cliente'));
+        return view('cliente.edit', compact('cliente'));
 
     }
 

@@ -13,7 +13,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        $productos= Producto::all();
+        return view('productos.index', compact('productos'));
     }
 
     /**
@@ -21,7 +22,8 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        //
+        $producto= new Producto();
+        return view('productos.create', compact('producto'));
     }
 
     /**
@@ -29,7 +31,13 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $producto = new Producto();
+        $producto->nombre = $request->nombre;
+        $producto->cantidad=$request->cantidad;
+        $producto->preciocomprado=$request->preciocomprado;
+        $producto->precioventa=$request->precioventa;
+        $producto->save();
+        return redirect()->route('productos.index');
     }
 
     /**
