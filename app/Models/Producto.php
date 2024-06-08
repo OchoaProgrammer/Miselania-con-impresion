@@ -16,10 +16,16 @@ class Producto extends Model
         return $this->belongsToMany(Venta::class, 'venta_producto')
                     ->withPivot('cantidad', 'precio')
                     ->withTimestamps();
+                    return $this->hasMany(Venta::class);
     }
 
     public function categoria()
     {
         return $this->belongsTo(Categoria::class);
     }
+
+
+
+
+
 }

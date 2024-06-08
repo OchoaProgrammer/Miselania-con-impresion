@@ -47,12 +47,6 @@
                 <td>
                     <div class="btn-container">
                         <a href="{{ route('ventas.show', $venta->id) }}" class="btn btn-primary btn-action">Ver</a>
-                        <a href="{{ route('ventas.edit', $venta->id) }}" class="btn btn-primary btn-action">Editar</a>
-                        <form action="{{ route('ventas.destroy', $venta->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-action">Eliminar</button>
-                        </form>
                     </div>
                 </td>
             </tr>

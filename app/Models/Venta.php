@@ -22,8 +22,9 @@ class Venta extends Model
         return $this->belongsToMany(Producto::class, 'venta_producto')->withPivot('cantidad', 'precio');
     }
 
-    public function agregarProducto($producto_id, $cantidad, $precio)
-    {
-        $this->productos()->attach($producto_id, ['cantidad' => $cantidad, 'precio' => $precio]);
-    }
+   public function agregarProducto(Producto $producto, $cantidad, $precio)
+{
+    $this->productos()->attach($producto->id, ['cantidad' => $cantidad, 'precio' => $precio]);
+}
+
 }

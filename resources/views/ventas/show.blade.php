@@ -16,7 +16,6 @@
                 <tr>
                     <th>Producto</th>
                     <th>Cantidad</th>
-
                     <th>Subtotal</th>
                 </tr>
             </thead>
@@ -25,7 +24,6 @@
                     <tr>
                         <td>{{ $producto->nombre }}</td>
                         <td>{{ $producto->pivot->cantidad }}</td>
-
                         <td>{{ $producto->pivot->cantidad * $producto->pivot->precio }}</td>
                     </tr>
                 @endforeach
@@ -33,17 +31,32 @@
         </table>
     </div>
     <div class="total">
-        <H3><strong>Total a pagar:</strong> {{ $venta->total }}</H3>
+        <h3><strong>Total a pagar:</strong> {{ $venta->total }}</h3>
     </div>
     <div class="footer">
         DISTRIBUIDORA JF <br>
         JULIAN ESTEBAN MARIN <br>TEL: +57 310 3476304<br>NIT: 1037501728-9 <br>DIRECCION: CRA 33 #56-56 MED. BOSTON
-        <BR>
-        <BR> <STRONg>  Gracias por su compra</STRONg></BR></BR>
+        <br><br><strong>Gracias por su compra</strong>
     </div>
 </div>
 
+<button onclick="window.print()">Imprimir</button>
+
 <style>
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        .factura, .factura * {
+            visibility: visible;
+        }
+        .factura {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50mm;
+        }
+    }
     .factura {
         width: 50mm;
         margin: 0 auto;
@@ -92,5 +105,13 @@
         text-align: center;
         margin-top: 5px;
         font-size: 8px;
+    }
+
+    button {
+        display: block;
+        margin: 10px auto;
+        padding: 5px 10px;
+        font-size: 10px;
+        cursor: pointer;
     }
 </style>

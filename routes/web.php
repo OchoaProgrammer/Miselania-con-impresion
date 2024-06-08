@@ -40,6 +40,11 @@ Route::get('/ventas/{id}', [VentaController::class,'show'])->name('ventas.show')
 Route::get('/productos-por-categoria/{categoria}', [VentaController::class, 'productosPorCategoria'])->name('productos.por.categoria');
 Route::get('/stock-producto/{producto}', [VentaController::class, 'stockProducto'])->name('stock.producto');
 
+// routes/web.php
+
+
+
+
 
 
 
