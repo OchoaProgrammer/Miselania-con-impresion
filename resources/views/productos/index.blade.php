@@ -1,65 +1,95 @@
+@extends('layouts.app')
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+@section('title', 'Dashboard')
 
-    <title>Document</title>
+@section('content')
 
-    <style>
-        body {
-            background: linear-gradient(to right, #004ff8, #a4cee2); /* Color de fondo */
-            color: whitesmoke;
-            background-position: center center;
-            box-shadow:#000000;
-            display: flex; /* Usamos flexbox para organizar los elementos */
-            flex-direction: column; /* Establecemos la dirección de flexión vertical */
-            align-items: center; /* Alineamos los elementos al centro horizontalmente */
-            min-height: 100vh; /* Hacemos que el cuerpo ocupe al menos toda la altura de la ventana */
-        }
+<br>
+<br>
+<br>
+<br>
+<style>
+body {
+    background: linear-gradient(to right, #004ff8, #a4cee2);
+    color: whitesmoke;
+    font-family: Arial, sans-serif;
+}
 
-        h1 {
-            margin-top: 2%;
-            border-radius: 5%;
-            color: #ffffff; /* Color de texto */
-            text-align: center;
-            width: 100%; /* Hacemos que el título ocupe todo el ancho disponible */
-        }
-        </style>
+/* Estilo para los botones de acción */
+.btn-container {
+    display: flex;
+}
 
-</head>
-<body>
-    <div class="container">
-        <h1>Productos</h1>
-        <form action="{{ route( 'producto.create' ) }}" method="get">
-            <table class="table table-dark">
-                <thead>
-                  <tr>
+.btn-action {
+    margin-right: 5px; /* Ajusta el margen entre los botones de acción */
+}
+
+/* Estilo para el modal */
+.modal-title {
+    color: black;
+}
+</style>
+<div class="container">
+    <h1 style="color: white">Productos</h1>
+    <form action="{{ route( 'producto.create' ) }}" method="get">
+        <table class="table table-dark">
+            <thead>
+                <tr>
                     <th scope="col">#</th>
                     <th scope="col">Producto</th>
-                    <th scope="col">Cantidad</th>
+                    <th scope="col">Stock</th>
                     <th scope="col">Precio de Compra</th>
                     <th scope="col">Precio de Venta</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    @foreach ($productos as $producto )
-
-
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($productos as $producto)
+                <tr>
                     <td>{{ $producto->id }}</td>
                     <td>{{ $producto->nombre }}</td>
-                    <td>{{ $producto->cantidad }} </td>
-                    <td>{{ $producto->preciocomprado }} </td>
-                    <td>{{ $producto->precioventa}} </td>
-                  </tr>
-                  @endforeach
-                </tbody>
-              </table>
+                    <td>{{ $producto->stock }}</td>
+                    <td>{{ $producto->preciocomprado }}</td>
+                    <td>{{ $producto->precioventa }}</td>
+                    <td>{{ $producto->categoria->nombre }}</td>
+                    <td>
+                        <div class="btn-container">
+                            <a href="{{ route('productos.edit', $producto->id) }}" class="btn btn-warning btn-sm btn-action">Editar</a>
+                            <form action="{{ route('productos.agregar_cantidad', $producto->id) }}" method="POST">
+                                <button type="button" class="btn btn-info btn-sm btn-action" data-bs-toggle="modal" data-bs-target="#agregarCantidadModal{{ $producto->id }}">+</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-success">Crear Producto</button>
+        @foreach ($productos as $producto)
+        <div class="modal fade" id="agregarCantidadModal{{ $producto->id }}" tabindex="-1" aria-labelledby="agregarCantidadModalLabel{{ $producto->id }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="agregarCantidadModalLabel{{ $producto->id }}">Agregar Cantidad a {{ $producto->nombre }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('productos.agregar_cantidad', $producto->id) }}" method="POST">
+                        @csrf
+                        <div class="modal-body">
+                            <label for="stock" style="color: black;">Cantidad Nueva:</label>
+                            <input type="number" id="stock" name="stock" class="form-control" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Agregar Cantidad</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </form>
+</div>
+@endsection
 
-            <button type="submit" class="btn btn-success">Crear Producto</button>
-</body>
-</html>

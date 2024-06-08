@@ -9,7 +9,17 @@ class Producto extends Model
 {
     use HasFactory;
 
-    public function Venta(){
-        return $this->hasMany(Venta::class);    
+    protected $fillable = ['nombre', 'stock', 'preciocomprado', 'precioventa', 'categoria_id'];
+
+    public function ventas()
+    {
+        return $this->belongsToMany(Venta::class, 'venta_producto')
+                    ->withPivot('cantidad', 'precio')
+                    ->withTimestamps();
+    }
+
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
     }
 }

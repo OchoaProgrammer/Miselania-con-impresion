@@ -20,14 +20,14 @@
 <body style="background-color: rgb(255, 255, 255);box-shadow:#000000; ">
     <center>
     <div class="card col-md-2" style="color: rgb(255, 255, 255); text-align: center; display:flex; margin-top:20%; background-color:rgba(31, 25, 25, 0.034);box-shadow:#000000;width: 30%;  " >
-    <form action="{{route ('cliente.store') }}"  method="POST" >
+    <form action="{{route ('categorias.store') }}"  method="POST" >
         @csrf
             <div class="card-header" style="background-color: rgb(36, 16, 211);box-shadow:#000000;overflow: hidden;">
-              Registra tu cliente
+              Registra tu Categoria
             </div>
             <div class="card-body">
     <div class="mb-3">
-        <label for="nombre" class="form-label" style="color: black">Nombre del cliente</label>
+        <label for="nombre" class="form-label" style="color: black">Nombre De La Categoria</label>
         <input type="text" id="nombre" name="nombre"
         <br>
         <button type="submit" style="background-color: rgb(36, 16, 211); color:aliceblue; border-radius:10px ; box-shadow:#000000; overflow: hidden;   ">Registrar</button>

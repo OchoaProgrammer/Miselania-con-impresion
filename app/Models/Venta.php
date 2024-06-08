@@ -8,12 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class Venta extends Model
 {
     use HasFactory;
+    protected $table = 'ventas';
 
-    public function cliente (){
+    protected $fillable = ['cliente_id', 'total','fecha'];
+
+    public function cliente()
+    {
         return $this->belongsTo(Cliente::class);
     }
 
-    public function producto (){
-        return $this->belongsTo(Producto::class);
+    public function productos()
+    {
+        return $this->belongsToMany(Producto::class, 'venta_producto')->withPivot('cantidad', 'precio');
+    }
+
+    public function agregarProducto($producto_id, $cantidad, $precio)
+    {
+        $this->productos()->attach($producto_id, ['cantidad' => $cantidad, 'precio' => $precio]);
     }
 }

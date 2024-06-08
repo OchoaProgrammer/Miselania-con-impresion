@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producto;
+use App\Models\Categoria;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos= Producto::all();
+        $productos = Producto::all();
         return view('productos.index', compact('productos'));
     }
 
@@ -22,8 +23,9 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        $producto= new Producto();
-        return view('productos.create', compact('producto'));
+        $categorias = Categoria::all();
+        $producto = new Producto();
+        return view('productos.create', compact('categorias','producto'));
     }
 
     /**
@@ -33,42 +35,57 @@ class ProductoController extends Controller
     {
         $producto = new Producto();
         $producto->nombre = $request->nombre;
-        $producto->cantidad=$request->cantidad;
-        $producto->preciocomprado=$request->preciocomprado;
-        $producto->precioventa=$request->precioventa;
+        $producto->stock = $request->stock;
+        $producto->preciocomprado = $request->preciocomprado;
+        $producto->precioventa = $request->precioventa;
+        $producto->categoria_id = $request->categoria_id;
         $producto->save();
         return redirect()->route('productos.index');
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Producto $producto)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Producto $producto)
+    public function edit($id)
     {
-        //
+        $producto = Producto::findOrFail($id);
+        $categorias = Categoria::all();
+        return view('productos.edit', compact('producto', 'categorias'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Producto $producto)
+    public function update(Request $request, $id)
     {
-        //
+        $producto = Producto::findOrFail($id);
+        $producto->nombre = $request->nombre;
+        $producto->stock = $request->stock;
+        $producto->preciocomprado = $request->preciocomprado;
+        $producto->precioventa = $request->precioventa;
+        $producto->categoria_id = $request->categoria_id;
+        $producto->save();
+
+        return redirect()->route('productos.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Producto $producto)
+    public function destroy($id)
     {
-        //
+        $producto = Producto::findOrFail($id);
+        $producto->delete();
+        return redirect()->route('productos.index');
     }
+
+    public function agregarCantidad(Request $request, $id)
+{
+    $producto = Producto::findOrFail($id);
+    $cantidadNueva = $request->stock;
+    $producto->stock += $cantidadNueva;
+    $producto->save();
+
+    return redirect()->back()->with('success', 'Cantidad agregada correctamente.');
+}
 }

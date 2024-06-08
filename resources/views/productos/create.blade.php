@@ -4,9 +4,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Productos</title>
     <style>
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+select:focus {
+    outline: none;
+    border-color: #007bff; /* Color del borde al estar enfocado */}
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+
+    background: linear-gradient(to right, #004ff8, #a4cee2);
+    color: rgb(0, 0, 0);
             margin: 0;
             padding: 0;
             display: flex;
@@ -66,17 +82,25 @@
         <h2>Registrar Producto</h2>
         <form action="{{route ('producto.store') }}" method="POST">
             @csrf
+            <label for="categoria_id">Categoría:</label>
+            <select id="categoria_id" name="categoria_id" required>
+                <option value="" disabled selected>Selecciona una categoría</option>
+                @foreach ($categorias as $categoria)
+                    <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+                @endforeach
+            </select>
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" placeholder="Nombre del producto" required>
 
-            <label for="cantidad">cantidad:</label>
-            <input type="number" id="cantidad" name="cantidad" placeholder="cantidad del producto" min="0" step="0.01" required>
+            <label for="stock">cantidad:</label>
+            <input type="number" id="stock" name="stock" placeholder="cantidad del producto" min="0" step="0.01" required>
 
             <label for="preciocomprado">Precio de Compra:</label>
             <input type="number" id="preciocomprado" name="preciocomprado" placeholder="preciocomprado" min="0" required>
 
             <label for="precioventa">Precio de Venta:</label>
             <input type="number" id="precioventa" name="precioventa" placeholder="precio al vender" min="0" required>
+
 
             <button type="submit">Guardar Producto</button>
         </form>
