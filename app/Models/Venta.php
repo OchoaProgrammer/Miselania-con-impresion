@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +9,7 @@ class Venta extends Model
     use HasFactory;
     protected $table = 'ventas';
 
-    protected $fillable = ['cliente_id', 'total','fecha'];
+    protected $fillable = ['cliente_id', 'total','fecha', 'ganancia'];
 
     public function cliente()
     {
@@ -19,12 +18,14 @@ class Venta extends Model
 
     public function productos()
     {
-        return $this->belongsToMany(Producto::class, 'venta_producto')->withPivot('cantidad', 'precio');
+        return $this->belongsToMany(Producto::class, 'venta_producto')
+                    ->withPivot('cantidad', 'precio')
+                    ->withTimestamps();
     }
 
-   public function agregarProducto(Producto $producto, $cantidad, $precio)
-{
-    $this->productos()->attach($producto->id, ['cantidad' => $cantidad, 'precio' => $precio]);
+    public function agregarProducto(Producto $producto, $cantidad, $precio)
+    {
+        $this->productos()->attach($producto->id, ['cantidad' => $cantidad, 'precio' => $precio]);
+    }
 }
 
-}

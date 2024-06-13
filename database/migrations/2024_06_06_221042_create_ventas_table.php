@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('cliente_id')->constrained()->onDelete('cascade');
             $table->decimal('total', 14, 2); // Precio total de la venta
             $table->dateTime('fecha');
+            $table->decimal('ganancia', 10, 2)->default(0);
             $table->timestamps();
         });
     }

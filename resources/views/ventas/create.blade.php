@@ -41,8 +41,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="precioventa">Precio de venta:</label>
-                                <input type="text" name="precioventa" id="precioventa" class="form-control" required readonly>
+                                <label for="precioventa">Precio de Venta:</label>
+                                <input type="text" name="precioventa" id="precioventa" class="form-control" required>
                             </div>
 
                             <div class="form-group">
@@ -151,7 +151,7 @@
             var productoId = document.getElementById('producto_id').value;
             var productoNombre = document.getElementById('producto_id').options[document.getElementById('producto_id').selectedIndex].text;
             var cantidad = parseInt(document.getElementById('cantidadvender').value);
-            var precioVenta = parseFloat(document.getElementById('precioventa').value);
+            var precioVenta = parseFloat(document.getElementById('precioventa').value); // Capturar el precio de venta ingresado
             var stockDisponible = parseInt(document.getElementById('stock').value);
 
             if (cantidad > stockDisponible) {
@@ -188,6 +188,7 @@
                     '<td><button type="button" class="btn btn-danger btn-sm" onclick="eliminarProducto(this)">Eliminar</button></td>' +
                     '<input type="hidden" name="productos[' + productosCounter + '][id]" value="' + productoId + '">' +
                     '<input type="hidden" name="productos[' + productosCounter + '][cantidad]" value="' + cantidad + '">' +
+                    '<input type="hidden" name="productos[' + productosCounter + '][precio]" value="' + precioVenta + '">' + // Incluir el precio de venta aquí
                     '</tr>';
 
                 // Incrementar el contador de productos

@@ -34,6 +34,7 @@ class ClienteController extends Controller
     {
         $cliente=new Cliente(); // Crear un
         $cliente->nombre = $request->nombre;
+        $cliente->phone = $request->phone;
         $cliente->save();
         return redirect()->route('clientes.index');
     }
@@ -44,9 +45,12 @@ class ClienteController extends Controller
     public function show($id)
     {
         $cliente = Cliente::findOrFail($id);
-        $ventas = $cliente->ventas()->get();
-        return view('cliente.show', compact('ventas'));
+        $ventas = $cliente->ventas; // Asegúrate de que 'ventas' sea la relación correcta definida en el modelo Cliente
+
+        return view('clientes.show', compact('cliente', 'ventas'));
     }
+
+
 
     /**
      * Show the form for editing the specified resource.

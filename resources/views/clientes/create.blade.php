@@ -28,7 +28,10 @@
             <div class="card-body">
     <div class="mb-3">
         <label for="nombre" class="form-label" style="color: black">Nombre del cliente</label>
-        <input type="text" id="nombre" name="nombre"
+        <input type="text" id="nombre" name="nombre">
+        <br>
+        <label for="phone" class="form-label" style="color: black">Telefono del cliente</label>
+        <input type="text" id="phone" name="phone">
         <br>
         <button type="submit" style="background-color: rgb(36, 16, 211); color:aliceblue; border-radius:10px ; box-shadow:#000000; overflow: hidden;   ">Registrar</button>
       </div>

@@ -5,15 +5,19 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CategoriaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VentaController;
+use App\Http\Controllers\HomeController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
-Route::get('/', function () {
-    return view('dashboard');
-})->name('dashboard');
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+
 
 Route::get('/clientes',[ClienteController::class, 'index'])->name('clientes.index');
 Route::post('/cliente',[ClienteController::class,'store'])->name('cliente.store');
 Route::get('/cliente/create',[ClienteController::class,'create'])->name('cliente.create');
 Route::get('/cliente/{id}',[ClienteController::class,'show'])->name('cliente.show');
+
 
 Route::get('/productos',[ProductoController::class, 'index'])->name('productos.index');
 Route::post('/producto',[ProductoController::class,'store'])->name('producto.store');

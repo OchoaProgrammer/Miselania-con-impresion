@@ -12,7 +12,7 @@
 
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('dashboard') }}">Distribuidora</a>
+            <a class="navbar-brand" href="/">Distribuidora</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -23,9 +23,6 @@
                 </div>
                 <div class="offcanvas-body" style="background-color: #343a40;"> <!-- Cambiando el fondo del offcanvas-body a negro -->
                     <ul class="navbar-nav flex-grow-1 pe-3 "> <!-- Quitando la clase justify-content-end y agregando bg-dark para el fondo oscuro -->
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ route('dashboard') }}" style="color: white;">Inicio</a> <!-- Haciendo que el texto sea blanco -->
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('clientes.index') }}" style="color: white;">Clientes</a> <!-- Haciendo que el texto sea blanco -->
                         </li>

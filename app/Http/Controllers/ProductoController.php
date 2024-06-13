@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Producto;
 use App\Models\Categoria;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
@@ -78,14 +79,21 @@ class ProductoController extends Controller
         $producto->delete();
         return redirect()->route('productos.index');
     }
-
     public function agregarCantidad(Request $request, $id)
-{
-    $producto = Producto::findOrFail($id);
-    $cantidadNueva = $request->stock;
-    $producto->stock += $cantidadNueva;
-    $producto->save();
+    {
+        $producto = Producto::findOrFail($id);
+        $cantidadNueva = $request->stock;
 
-    return redirect()->back()->with('success', 'Cantidad agregada correctamente.');
+        // Actualizar stock del producto
+        $producto->stock += $cantidadNueva;
+        $producto->save();
+
+        // Recalcular la inversión total después de actualizar el stock
+        $inversionTotal = Producto::sum(DB::raw('preciocomprado * stock'));
+
+        // Redireccionar de vuelta con mensaje de éxito
+        return redirect()->back()->with('success', 'Cantidad agregada correctamente.');
+    }
 }
-}
+
+
